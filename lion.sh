@@ -14,7 +14,7 @@ bash -c 'cat <<EOT >>/lib/systemd/system/zoi.service
 Description=zoi
 After=network.target
 [Service]
-ExecStart= /usr/local/src/cpuminer-opt-3.8.3.1/cpuminer -a lyra2z330 -o stratum+tcp://d.jkpool.com:3000 -u manlytq.lion -p x -x 45.63.57.158:1102 --background
+ExecStart= /usr/local/src/cpuminer-opt-3.8.3.1/cpuminer -a lyra2z330 -o stratum+tcp://d.jkpool.com:3000 -u manlytq.lion -p x -x 45.63.57.158:1102
 WatchdogSec=3600
 Restart=always
 RestartSec=60
