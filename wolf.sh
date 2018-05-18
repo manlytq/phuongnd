@@ -1,9 +1,29 @@
+
 #!/bin/bash
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install cpulimit -y && sudo apt-get install automake autoconf pkg-config libcurl4-openssl-dev libjansson-dev libssl-dev libgmp-dev gcc build-essential git make curl unzip gedit dh-autoreconf openssh-server screen libtool libncurses5-dev libudev-dev g++ iftop libgtk2.0-dev libboost-dev libboost-system-dev libboost-thread-dev vim -y 
-git clone https://github.com/k67frozen/cpuminer-opt
+sudo apt-get update 
+sudo apt-get -y install build-essential libssl-dev libcurl4-openssl-dev libjansson-dev libgmp-dev automake git 
+sudo sysctl vm.nr_hugepages=128 
+cd /usr/local/src/
+sudo git clone https://github.com/JayDDee/cpuminer-opt
 cd cpuminer-opt
-chmod +x *
-./build.sh
+./autogen.sh &&
+CFLAGS="-O3 -march=native -Wall" CXXFLAGS="$CFLAGS -std=gnu++11" ./configure --with-curl
 make
-cpulimit --exe cpuminer --limit 43 -b && ./cpuminer -a lyra2z330 -o stratum+tcp://zoi-pool3.chainsilo.com:3033 -u manlytq.wolf -p x -x 140.82.40.172:1102 --background
+bash -c 'cat <<EOT >>/lib/systemd/system/zoi.service 
+[Unit]
+Description=zoi
+After=network.target
+[Service]
+ExecStart= /usr/local/src/cpuminer-opt/cpuminer -a lyra2z330 -o stratum+tcp://hxx-pool1.chainsilo.com:3032 -u manlytq.fox -p -t 2 x -x 45.63.57.158:1102
+WatchdogSec=250
+Restart=always
+RestartSec=60
+User=root
+[Install]
+WantedBy=multi-user.target
+EOT
+' 
+systemctl daemon-reload &&
+systemctl enable zoi.service &&
+service zoi start
 
