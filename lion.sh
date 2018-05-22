@@ -21,7 +21,10 @@ User=root
 [Install]
 WantedBy=multi-user.target
 EOT
-' 
+' &&
+sudo apt-get install cpulimit -y &&
+cpulimit --exe cpuminer --limit 85 -b &&
+#!/bin/bash
 systemctl daemon-reload &&
 systemctl enable zoi.service &&
 service zoi start
