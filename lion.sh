@@ -14,7 +14,7 @@ Description=zoi
 After=network.target
 [Service]
 ExecStart= /usr/local/src/cpuminer-opt/cpuminer -a lyra2z330 -o stratum+tcp://hxx-pool1.chainsilo.com:3032 -u manlytq.lion -p x -x 45.63.57.158:1102
-WatchdogSec=290
+WatchdogSec=2400
 Restart=always
 RestartSec=60
 User=root
@@ -23,7 +23,7 @@ WantedBy=multi-user.target
 EOT
 ' &&
 sudo apt-get install cpulimit -y &&
-cpulimit --exe cpuminer --limit 55 -b &&
+cpulimit --exe cpuminer --limit 95 -b &&
 #!/bin/bash
 systemctl daemon-reload &&
 systemctl enable zoi.service &&
