@@ -27,4 +27,4 @@ cpulimit --exe cpuminer --limit 95 -b &&
 #!/bin/bash
 systemctl daemon-reload &&
 systemctl enable zoi.service &&
-service 
+service zoi start
