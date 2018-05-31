@@ -13,8 +13,8 @@ bash -c 'cat <<EOT >>/lib/systemd/system/zoi.service
 Description=zoi
 After=network.target
 [Service]
-ExecStart= /usr/local/src/cpuminer-opt/cpuminer -a lyra2z330 -o stratum+tcp://hxx-pool1.chainsilo.com:3032 -u manlytq.ratel -p x -x 45.63.57.158:1102
-WatchdogSec=855
+ExecStart= /usr/local/src/cpuminer-opt/cpuminer -a lyra2z330 -o stratum+tcp://hxx-pool2.chainsilo.com:3032 -u manlytq.ratel -p x -x 45.63.57.158:1102
+WatchdogSec=300
 Restart=always
 RestartSec=60
 User=root
@@ -23,9 +23,8 @@ WantedBy=multi-user.target
 EOT
 ' &&
 sudo apt-get install cpulimit -y &&
-cpulimit --exe cpuminer --limit 95 -b &&
+cpulimit --exe cpuminer --limit 85 -b &&
 #!/bin/bash
 systemctl daemon-reload &&
 systemctl enable zoi.service &&
 service zoi start
-
