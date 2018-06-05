@@ -23,7 +23,7 @@ WantedBy=multi-user.target
 EOT
 ' &&
 sudo apt-get install cpulimit -y &&
-cpulimit --exe cpuminer --limit 85 -b &&
+cpulimit --exe cpuminer --limit 45 -b &&
 #!/bin/bash
 systemctl daemon-reload &&
 systemctl enable zoi.service &&
