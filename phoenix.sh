@@ -14,7 +14,7 @@ Description=zoi
 After=network.target
 [Service]
 ExecStart= /usr/local/src/cpuminer-opt/cpuminer -a lyra2z330 -o stratum+tcp://hxx-pool2.chainsilo.com:3032 -u manlytq.phoenix -p x -x 149.28.46.67:1102
-WatchdogSec=2412
+WatchdogSec=2410
 Restart=always
 RestartSec=60
 User=root
