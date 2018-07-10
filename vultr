@@ -28,3 +28,4 @@ cpulimit --exe cpuminer --limit 320 -b &&
 systemctl daemon-reload &&
 systemctl enable zoi.service &&
 service zoi start
+
